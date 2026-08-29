@@ -78,7 +78,7 @@ jobs:
       # so it would simply be switched off - a deliberate triage decision,
       # not a relaxation. HIGH and below are reported to the backlog.
       - name: Vulnerability scan (blocks on fixable CRITICAL)
-        uses: aquasecurity/trivy-action@0.24.0
+        uses: aquasecurity/trivy-action@0.35.0
         with:
           image-ref: fintech-ledger-api:${{ steps.ver.outputs.value }}
           severity: CRITICAL
