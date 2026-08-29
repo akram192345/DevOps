@@ -1,0 +1,78 @@
+GIT HISTORY EXPORT — fintech-ledger-api
+Generated: 2026-08-29 00:31 UTC
+
+=== 1. Commit graph (all branches) ===
+* 02dad7f  2026-08-29  Towfiq                         (feature/fraud-velocity-check) wip: add velocity limit helper for fraud detection (tests pending)
+*   112ef52  2026-08-29  Towfiq                         (HEAD -> main, tag: v1.1.0) Merge pull request #7 from feature/idempotency-key
+|\  
+| * 661a8bc  2026-08-29  Towfiq                         test: cover idempotency behaviour before merging to trunk
+| * 53a0035  2026-08-29  Towfiq                         feat: add idempotency check to prevent duplicate debits on retry
+|/  
+* 5e2ec58  2026-08-29  Towfiq                         (tag: v1.0.0) docs: add repository README describing the artefacts and branching model
+* 03816d8  2026-08-29  Towfiq                         infra: add Terraform module for reproducible, tagged environments
+* fbb1e6f  2026-08-29  Towfiq                         ci: add GitHub Actions pipeline with quality gate and blue-green CD
+* d90b92a  2026-08-29  Towfiq                         build: containerise service with multi-stage, non-root, read-only image
+* 97a15c0  2026-08-29  Towfiq                         test: add unit and integration suites with an 80% coverage gate
+* eb49250  2026-08-29  Towfiq                         feat: expose ledger over HTTP with health, balance and transaction routes
+* e4975ab  2026-08-29  Towfiq                         feat: add ledger domain logic with exact decimal money handling
+
+=== 2. Branches ===
+  feature/fraud-velocity-check
+* main
+
+=== 3. Annotated release tags ===
+v1.0.0          v1.0.0 - first releasable trunk: ledger API, CI pipeline, container and IaC
+v1.1.0          v1.1.0 - idempotent payment retries; no schema change, blue-green safe
+
+=== 4. Merge commit detail (evidence of pull-request merge) ===
+commit 112ef52a7543fc445f5372a709b8b0b4aafee8aa
+Merge: 5e2ec58 661a8bc
+Author: Towfiq <towfiq@example.ac.uk>
+Date:   Sat Aug 29 00:31:13 2026 +0000
+
+    Merge pull request #7 from feature/idempotency-key
+    
+    Reviewed-by: payments-platform team
+    Quality gate: passed (lint, bandit, 18 tests, coverage 96%, 0 critical CVEs)
+
+=== 5. Files changed per commit on main ===
+112ef52 Merge pull request #7 from feature/idempotency-key
+5e2ec58 docs: add repository README describing the artefacts and branching model
+ README.md | 40 ++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 40 insertions(+)
+661a8bc test: cover idempotency behaviour before merging to trunk
+ tests/test_ledger.py | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
+53a0035 feat: add idempotency check to prevent duplicate debits on retry
+ app/ledger.py | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
+03816d8 infra: add Terraform module for reproducible, tagged environments
+ infra/terraform/dev.tfvars        |   2 +
+ infra/terraform/main.tf           | 126 ++++++++++++++++++++++++++++++++++++++
+ infra/terraform/production.tfvars |   3 +
+ 3 files changed, 131 insertions(+)
+fbb1e6f ci: add GitHub Actions pipeline with quality gate and blue-green CD
+ .github/workflows/cd.yml | 48 +++++++++++++++++++++++
+ .github/workflows/ci.yml | 99 ++++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 147 insertions(+)
+d90b92a build: containerise service with multi-stage, non-root, read-only image
+ .dockerignore      | 10 ++++++++++
+ Dockerfile         | 34 ++++++++++++++++++++++++++++++++++
+ docker-compose.yml | 23 +++++++++++++++++++++++
+ 3 files changed, 67 insertions(+)
+97a15c0 test: add unit and integration suites with an 80% coverage gate
+ .flake8              |  3 +++
+ pytest.ini           |  3 +++
+ tests/test_api.py    | 47 +++++++++++++++++++++++++++++++++++++++++++++++
+ tests/test_ledger.py | 51 +++++++++++++++++++++++++++++++++++++++++++++++++++
+ 4 files changed, 104 insertions(+)
+eb49250 feat: expose ledger over HTTP with health, balance and transaction routes
+ app/main.py | 51 +++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 51 insertions(+)
+e4975ab feat: add ledger domain logic with exact decimal money handling
+ .gitignore           | 10 ++++++++++
+ app/__init__.py      |  0
+ app/ledger.py        | 45 +++++++++++++++++++++++++++++++++++++++++++++
+ requirements-dev.txt |  5 +++++
+ requirements.txt     |  2 ++
+ 5 files changed, 62 insertions(+)
