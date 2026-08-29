@@ -1,0 +1,23 @@
+# Local developer environment. The same image tag that reaches production is
+# what runs here, so "works on my machine" and "works in prod" mean the same.
+services:
+  api:
+    build:
+      context: .
+      args:
+        APP_VERSION: ${APP_VERSION:-0.0.0-local}
+    image: fintech-ledger-api:${APP_VERSION:-0.0.0-local}
+    ports:
+      - "8000:8000"
+    environment:
+      APP_VERSION: ${APP_VERSION:-0.0.0-local}
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request;urllib.request.urlopen('http://127.0.0.1:8000/healthz')"]
+      interval: 15s
+      timeout: 3s
+      retries: 3
+    read_only: true
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
