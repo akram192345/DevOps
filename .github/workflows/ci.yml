@@ -78,33 +78,43 @@ jobs:
           docker build \
             --build-arg APP_VERSION=${{ steps.ver.outputs.value }} \
             -t fintech-ledger-api:${{ steps.ver.outputs.value }} .
-      # Human-readable scan first, purely so that any finding is legible in the
-      # run log. Non-blocking; the gate below is what enforces the policy.
-      - name: Vulnerability report (informational)
+      # NOTE: trivy-action ignores `severity` and `ignore-unfixed` when the
+      # output format is sarif - it always builds the report with all
+      # severities. The gate is therefore run as a table scan, where the
+      # filters do apply, and the SARIF report is produced separately as
+      # evidence with the gate disabled.
+
+      - name: Vulnerability report (informational, all severities)
         uses: aquasecurity/trivy-action@0.35.0
         with:
           image-ref: fintech-ledger-api:${{ steps.ver.outputs.value }}
-          severity: CRITICAL,HIGH
+          scanners: vuln
           format: table
           exit-code: '0'
 
-      # Gate on CRITICAL only, and ignore findings with no available fix.
-      # A gate that blocks on unfixable base-image CVEs cannot be satisfied,
-      # so it would simply be switched off - a deliberate triage decision,
-      # not a relaxation. HIGH and below are reported to the backlog.
-      - name: Vulnerability scan (blocks on fixable CRITICAL)
+      - name: Vulnerability gate (blocks on fixable CRITICAL)
         uses: aquasecurity/trivy-action@0.35.0
         with:
           image-ref: fintech-ledger-api:${{ steps.ver.outputs.value }}
+          scanners: vuln
           severity: CRITICAL
           ignore-unfixed: true
+          format: table
           exit-code: '1'
+
+      - name: Produce SARIF report as compliance evidence
+        if: always()
+        uses: aquasecurity/trivy-action@0.35.0
+        with:
+          image-ref: fintech-ledger-api:${{ steps.ver.outputs.value }}
+          scanners: vuln
           format: sarif
           output: trivy.sarif
+          exit-code: '0'
+
       # Code scanning ingestion needs a public repository or GitHub Advanced
       # Security, so the step is skipped rather than allowed to fail noisily on
-      # a private repo. The evidence itself is retained by the step below, so
-      # nothing is lost - only the dashboard view is unavailable.
+      # a private repo. The evidence itself is retained by the step below.
       - name: Upload scan results to code scanning
         if: always() && github.event.repository.private == false
         continue-on-error: true
