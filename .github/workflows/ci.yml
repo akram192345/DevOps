@@ -78,6 +78,16 @@ jobs:
           docker build \
             --build-arg APP_VERSION=${{ steps.ver.outputs.value }} \
             -t fintech-ledger-api:${{ steps.ver.outputs.value }} .
+      # Human-readable scan first, purely so that any finding is legible in the
+      # run log. Non-blocking; the gate below is what enforces the policy.
+      - name: Vulnerability report (informational)
+        uses: aquasecurity/trivy-action@0.35.0
+        with:
+          image-ref: fintech-ledger-api:${{ steps.ver.outputs.value }}
+          severity: CRITICAL,HIGH
+          format: table
+          exit-code: '0'
+
       # Gate on CRITICAL only, and ignore findings with no available fix.
       # A gate that blocks on unfixable base-image CVEs cannot be satisfied,
       # so it would simply be switched off - a deliberate triage decision,
