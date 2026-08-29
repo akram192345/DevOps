@@ -49,3 +49,19 @@ def test_unknown_transaction_kind_is_rejected():
 
 def test_balance_formats_to_two_decimals():
     assert format_balance(1550) == "15.50"
+
+
+def test_unseen_idempotency_key_is_not_duplicate():
+    from app.ledger import is_duplicate
+    assert is_duplicate({"k1"}, "k2") is False
+
+
+def test_repeated_idempotency_key_is_duplicate():
+    from app.ledger import is_duplicate
+    assert is_duplicate({"k1"}, "k1") is True
+
+
+def test_missing_idempotency_key_is_rejected():
+    from app.ledger import is_duplicate
+    with pytest.raises(ValueError):
+        is_duplicate(set(), "")
