@@ -43,3 +43,14 @@ def apply_transaction(balance_minor, amount, kind):
 def format_balance(balance_minor):
     """Render minor units back to a two-decimal string."""
     return f"{Decimal(balance_minor) / 100:.2f}"
+
+
+def is_duplicate(seen_keys, idempotency_key):
+    """Return True when a payment request has already been processed.
+
+    Retries are normal on mobile networks; without this check a customer could
+    be debited twice for one tap.
+    """
+    if not idempotency_key:
+        raise ValueError("idempotency key is required")
+    return idempotency_key in seen_keys
