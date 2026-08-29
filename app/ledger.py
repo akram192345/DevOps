@@ -54,3 +54,11 @@ def is_duplicate(seen_keys, idempotency_key):
     if not idempotency_key:
         raise ValueError("idempotency key is required")
     return idempotency_key in seen_keys
+
+
+MAX_TXNS_PER_MINUTE = 5
+
+
+def exceeds_velocity_limit(txn_count_last_minute):
+    """Flag accounts transacting unusually fast - a simple fraud signal."""
+    return txn_count_last_minute > MAX_TXNS_PER_MINUTE
