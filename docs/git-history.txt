@@ -1,20 +1,23 @@
 GIT HISTORY EXPORT — fintech-ledger-api
-Generated: 2026-08-29 00:31 UTC
+Generated: 2026-08-29 00:35 UTC
 
 === 1. Commit graph (all branches) ===
-* 02dad7f  2026-08-29  Towfiq                         (feature/fraud-velocity-check) wip: add velocity limit helper for fraud detection (tests pending)
-*   112ef52  2026-08-29  Towfiq                         (HEAD -> main, tag: v1.1.0) Merge pull request #7 from feature/idempotency-key
-|\  
-| * 661a8bc  2026-08-29  Towfiq                         test: cover idempotency behaviour before merging to trunk
-| * 53a0035  2026-08-29  Towfiq                         feat: add idempotency check to prevent duplicate debits on retry
+* 108fe8f 2026-08-29  (HEAD -> main) docs: capture local test run output as evidence
+* 2600e7f 2026-08-29  docs: export git history for portfolio appendix
+| * 02dad7f 2026-08-29  (feature/fraud-velocity-check) wip: add velocity limit helper for fraud detection (tests pending)
 |/  
-* 5e2ec58  2026-08-29  Towfiq                         (tag: v1.0.0) docs: add repository README describing the artefacts and branching model
-* 03816d8  2026-08-29  Towfiq                         infra: add Terraform module for reproducible, tagged environments
-* fbb1e6f  2026-08-29  Towfiq                         ci: add GitHub Actions pipeline with quality gate and blue-green CD
-* d90b92a  2026-08-29  Towfiq                         build: containerise service with multi-stage, non-root, read-only image
-* 97a15c0  2026-08-29  Towfiq                         test: add unit and integration suites with an 80% coverage gate
-* eb49250  2026-08-29  Towfiq                         feat: expose ledger over HTTP with health, balance and transaction routes
-* e4975ab  2026-08-29  Towfiq                         feat: add ledger domain logic with exact decimal money handling
+*   112ef52 2026-08-29  (tag: v1.1.0) Merge pull request #7 from feature/idempotency-key
+|\  
+| * 661a8bc 2026-08-29  test: cover idempotency behaviour before merging to trunk
+| * 53a0035 2026-08-29  feat: add idempotency check to prevent duplicate debits on retry
+|/  
+* 5e2ec58 2026-08-29  (tag: v1.0.0) docs: add repository README describing the artefacts and branching model
+* 03816d8 2026-08-29  infra: add Terraform module for reproducible, tagged environments
+* fbb1e6f 2026-08-29  ci: add GitHub Actions pipeline with quality gate and blue-green CD
+* d90b92a 2026-08-29  build: containerise service with multi-stage, non-root, read-only image
+* 97a15c0 2026-08-29  test: add unit and integration suites with an 80% coverage gate
+* eb49250 2026-08-29  feat: expose ledger over HTTP with health, balance and transaction routes
+* e4975ab 2026-08-29  feat: add ledger domain logic with exact decimal money handling
 
 === 2. Branches ===
   feature/fraud-velocity-check
@@ -36,6 +39,12 @@ Date:   Sat Aug 29 00:31:13 2026 +0000
     Quality gate: passed (lint, bandit, 18 tests, coverage 96%, 0 critical CVEs)
 
 === 5. Files changed per commit on main ===
+108fe8f docs: capture local test run output as evidence
+ docs/test-run-output.txt | 24 ++++++++++++++++++++++++
+ 1 file changed, 24 insertions(+)
+2600e7f docs: export git history for portfolio appendix
+ docs/git-history.txt | 78 ++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 78 insertions(+)
 112ef52 Merge pull request #7 from feature/idempotency-key
 5e2ec58 docs: add repository README describing the artefacts and branching model
  README.md | 40 ++++++++++++++++++++++++++++++++++++++++
