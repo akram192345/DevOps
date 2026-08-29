@@ -21,6 +21,7 @@ COPY app/ ./app/
 # Injected by the pipeline so /healthz reports exactly which build is live.
 ARG APP_VERSION=0.0.0-dev
 ENV APP_VERSION=${APP_VERSION} \
+    PYTHONPATH=/srv/app \
     PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1
 
