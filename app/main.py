@@ -48,4 +48,8 @@ def create_app():
 
 
 if __name__ == "__main__":
-    create_app().run(host="0.0.0.0", port=8000)
+    # Bandit B104 triaged and accepted: binding to all interfaces is required
+    # inside a container, because the process must accept traffic forwarded
+    # from the container network. Exposure is controlled by the Kubernetes
+    # Service and the security group, not by the bind address.
+    create_app().run(host="0.0.0.0", port=8000)  # nosec B104

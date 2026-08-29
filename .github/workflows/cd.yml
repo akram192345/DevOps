@@ -18,11 +18,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Assume deployment role via OIDC
-        run: echo "aws sts assume-role-with-web-identity (no static secrets)"
+        run: 'echo "aws sts assume-role-with-web-identity (no static secrets)"'
       - name: Deploy image to idle GREEN slot
-        run: echo "kubectl set image deploy/api-green api=$REGISTRY/api:${GITHUB_REF_NAME}"
+        run: 'echo "kubectl set image deploy/api-green api=$REGISTRY/api:${GITHUB_REF_NAME}"'
       - name: Smoke test GREEN before any customer traffic
-        run: echo "curl -f https://green.internal/healthz"
+        run: 'echo "curl -f https://green.internal/healthz"'
 
   canary-and-cutover:
     name: Canary, soak and cut over
@@ -30,11 +30,11 @@ jobs:
     needs: deploy-green
     steps:
       - name: Shift 5% of traffic to GREEN
-        run: echo "ingress weight: blue=95 green=5"
+        run: 'echo "ingress weight: blue=95 green=5"'
       - name: Soak for 15 minutes against SLOs
-        run: echo "query error rate, p95 latency and transaction success"
+        run: 'echo "query error rate, p95 latency and transaction success"'
       - name: Cut over to 100% GREEN
-        run: echo "ingress weight: blue=0 green=100 (BLUE kept warm for 24h)"
+        run: 'echo "ingress weight: blue=0 green=100 (BLUE kept warm for 24h)"'
 
   rollback:
     name: Automated rollback
@@ -43,6 +43,6 @@ jobs:
     if: failure()
     steps:
       - name: Flip router back to BLUE
-        run: echo "ingress weight: blue=100 green=0 - RTO target under 5 minutes"
+        run: 'echo "ingress weight: blue=100 green=0 - RTO target under 5 minutes"'
       - name: Raise incident and notify on-call
-        run: echo "open incident, attach run URL, start blameless postmortem"
+        run: 'echo "open incident, attach run URL, start blameless postmortem"'
