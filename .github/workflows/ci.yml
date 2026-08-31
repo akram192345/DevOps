@@ -147,3 +147,4 @@ jobs:
     steps:
       - name: Blocking checks passed
         run: 'echo "Lint, SAST and the test suite passed with coverage above 80 percent - merge permitted."'
+        
